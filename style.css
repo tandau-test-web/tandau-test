@@ -1,4 +1,4 @@
-/* Общий фон с плавным градиентом и картинкой */
+/* === Общий фон с плавным градиентом и картинкой === */
 body {
   margin: 0;
   padding: 0;
@@ -7,28 +7,31 @@ body {
   background: linear-gradient(120deg, rgba(42, 110, 189, 0.9), rgba(139, 195, 245, 0.8)),
               url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80") no-repeat center center fixed;
   background-size: cover;
+  line-height: 1.6;
 }
 
-/* Тёмная полупрозрачная подложка */
+/* === Тёмная полупрозрачная подложка === */
 .overlay {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 40px 20px;
 }
 
-/* Центрированный контейнер */
+/* === Центрированный контейнер === */
 .container {
   text-align: center;
   max-width: 800px;
   padding: 40px;
 }
 
-/* Заголовки */
+/* === Заголовки === */
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .highlight {
@@ -39,30 +42,101 @@ h1 {
   font-size: 1.2rem;
   margin-bottom: 30px;
   font-style: italic;
+  color: #f0f0f0;
 }
 
-/* Карточка */
+/* === Карточка === */
 .card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 25px;
   margin-bottom: 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
 }
 
-/* Кнопки */
-button, .link-btn {
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* === Кнопки === */
+button,
+.link-btn {
   background: #ffd54f;
   color: #2a2a2a;
   border: none;
-  padding: 12px 20px;
+  padding: 12px 24px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
-button:hover, .link-btn:hover {
+button:hover,
+.link-btn:hover {
   background: #ffca28;
+  transform: scale(1.05);
 }
+
+/* === Секция "О себе" === */
+.about {
+  background: #fff;
+  color: #333;
+  padding: 70px 20px;
+}
+
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Фото профиля */
+.profile-photo {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  border: 5px solid #ffd54f;
+  transition: transform 0.3s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+}
+
+/* Текст */
+.about-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-text h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #2a2a2a;
+  border-left: 5px solid #ffd54f;
+  padding-left: 10px;
+}
+
+.about-text h3 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #444;
+  font-size: 20px;
+}
+
+.about-text p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #555;
+  text-align: justify;
+}
+
