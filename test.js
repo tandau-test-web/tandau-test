@@ -252,7 +252,7 @@ const blocks = [
     ]
   },
   {
-     q: "Если проект оказался сложнее, чем ты ожидал, что ты делаешь?",
+    q: "Если проект оказался сложнее, чем ты ожидал, что ты делаешь?",
     answers: [
       { text: "Бросаю все силы и пробую снова", type: "Энергичный — активный, жизнерадостный, любит движение" },
       { text: "Перепроверяю план и ищу ошибку", type: "Ответственный — дисциплинированный, надёжный, серьёзный" },
@@ -263,7 +263,7 @@ const blocks = [
     ]
   },
   {
-     q: "Что тебе ближе в отношениях с людьми?",
+    q: "Что тебе ближе в отношениях с людьми?",
     answers: [
       { text: "Веселье и совместные приключения", type: "Энергичный — активный, жизнерадостный, любит движение" },
       { text: "Надёжность и стабильность", type: "Ответственный — дисциплинированный, надёжный, серьёзный" },
@@ -274,7 +274,7 @@ const blocks = [
     ]
   },
   {
-     q: "Как ты проводишь выходные?",
+    q: "Как ты проводишь выходные?",
     answers: [
       { text: "Активно — спорт, прогулки, тусовки", type: "Энергичный — активный, жизнерадостный, любит движение" },
       { text: "По плану — дела, учёба, порядок", type: "Ответственный — дисциплинированный, надёжный, серьёзный" },
@@ -285,8 +285,7 @@ const blocks = [
     ]
   },
   {
-
-     q: "Какая фраза тебе ближе?",
+    q: "Какая фраза тебе ближе?",
     answers: [
       { text: "Движение — это жизнь", type: "Энергичный — активный, жизнерадостный, любит движение" },
       { text: "Сначала обязанность, потом удовольствие", type: "Ответственный — дисциплинированный, надёжный, серьёзный" },
@@ -900,7 +899,6 @@ name: "Образ жизни",
       { text: "Технологии и открытия", type: "Инновационный — гаджеты, технологии, следование трендам, новаторство" },
       { text: "Любовь и забота близких", type: "Заботливый — внимание к людям, семье, помощь и поддержка" }
 ];
-
 <script>
 // 1. Счётчики
 let scores = {}; // {Творческий: 0, Аналитик: 0, ...}
@@ -1040,31 +1038,75 @@ const results = {
  Зона роста: Чтобы заботиться о других, не забывай вкладываться и в собственный ресурс.`,
 };
 
-// 3. При выборе ответа
-function chooseAnswer(type) {
-  scores[type] = (scores[type] || 0) + 1;
-  // перейти к следующему вопросу...
+// === 4. Генерация теста ===
+function renderTest() {
+  const container = document.getElementById("test-container");
+  container.innerHTML = "";
+
+  blocks.forEach(block => {
+    const blockEl = document.createElement("div");
+    blockEl.classList.add("block");
+
+    const title = document.createElement("h2");
+    title.textContent = block.name;
+    blockEl.appendChild(title);
+
+    block.questions.forEach((q, qi) => {
+      const qEl = document.createElement("div");
+      qEl.classList.add("question");
+
+      const qText = document.createElement("p");
+      qText.textContent = q.q;
+      qEl.appendChild(qText);
+
+      q.answers.forEach(ans => {
+        const btn = document.createElement("button");
+        btn.textContent = ans.text;
+        btn.classList.add("answer-btn");
+        btn.onclick = () => chooseAnswer(ans.type, btn);
+        qEl.appendChild(btn);
+      });
+
+      blockEl.appendChild(qEl);
+    });
+
+    container.appendChild(blockEl);
+  });
 }
 
-// 4. Подсчёт результата
+// === 5. При выборе ответа ===
+function chooseAnswer(type, btn) {
+  scores[type] = (scores[type] || 0) + 1;
+
+  // Подсветим выбранную кнопку
+  btn.style.background = "#4caf50";
+  btn.style.color = "#fff";
+}
+
+// === 6. Подсчёт результата ===
 function getResult() {
   let maxType = null, maxScore = -1;
   for (let t in scores) {
-    if (scores[t] > maxScore) { 
-      maxScore = scores[t]; 
-      maxType = t; 
+    if (scores[t] > maxScore) {
+      maxScore = scores[t];
+      maxType = t;
     }
   }
   return { type: maxType, score: maxScore };
 }
 
-// 5. Показ результата
+// === 7. Показ результата ===
 function showResult() {
   const res = getResult();
   const text = results[res.type] || "Рекомендации пока не добавлены";
-  document.getElementById('result').innerHTML = `
-    <h2>Ваш архетип: ${res.type}</h2>
+  document.getElementById("result").innerHTML = `
+    <h2>Ваш результат: ${res.type}</h2>
     <p>${text}</p>
   `;
 }
-</script>
+
+// === 8. Запуск ===
+document.addEventListener("DOMContentLoaded", () => {
+  renderTest();
+  document.getElementById("submit-btn").addEventListener("click", showResult);
+});
