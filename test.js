@@ -4,7 +4,7 @@ const blocks = [
     name: "Архетип",
     questions: [
       {
-        text: "Что для тебя важнее всего в жизни?",
+        text: "1.Что для тебя важнее всего в жизни?",
         answers: [
           { text: "Создавать новое и уникальное", type: "Создатель" },
           { text: "Изучать и понимать неизведанное", type: "Исследователь" },
@@ -132,4 +132,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderQuestions();
   document.getElementById("submit-btn").addEventListener("click", showResult);
 });
+
 
