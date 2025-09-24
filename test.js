@@ -1,20 +1,13 @@
+// ===================== Блоки с вопросами =====================
 const blocks = [
   {
     name: "Архетип",
     questions: [
       {
-        text: "Что для тебя важнее всего в жизни?",
+        text: "Что тебе ближе?",
         answers: [
-          { text: "Создавать новое и уникальное", type: "Создатель" },
-          { text: "Изучать и понимать неизведанное", type: "Исследователь" },
-          { text: "Вести людей за собой", type: "Лидер" },
-          { text: "Помогать и поддерживать других", type: "Помощник" },
-          { text: "Придумывать инновации и улучшения", type: "Инноватор" },
-          { text: "Делать конкретное дело и доводить до результата", type: "Практик" },
-          { text: "Общаться и вдохновлять людей", type: "Коммуникатор" },
-          { text: "Планировать и строить стратегии", type: "Стратег" },
-          { text: "Видеть красоту и гармонию в мире", type: "Эстет" },
-          { text: "Исцелять и восстанавливать", type: "Исцелитель" }
+          { text: "Придумывать новые идеи", type: "Создатель" },
+          { text: "Изучать факты и анализировать", type: "Исследователь" }
         ]
       },
       {
@@ -38,48 +31,58 @@ const blocks = [
       }
     ]
   }
+  // сюда потом добавишь: Темперамент, Интеллект, Интерес, Ценности, Образ жизни
 ];
-// Счётчики
+
+// ===================== Счётчики =====================
 let scores = {};
 
-// Результаты по типам
+// ===================== Результаты =====================
 const results = {
   "Создатель": "Ты творческий человек 🌸",
   "Исследователь": "Ты любишь узнавать новое 🔎",
   "Лидер": "У тебя лидерские качества 🎯",
-  "Помощник": "Ты умеешь поддерживать других 🤝"
+  "Помощник": "Ты умеешь поддерживать других 🤝",
+  "Энергичный": "Ты действуешь быстро и энергично ⚡",
+  "Спокойный": "Ты уравновешен и гармоничен ☯"
 };
 
-// Рендер вопросов
+// ===================== Рендер вопросов =====================
 function renderQuestions() {
   const container = document.getElementById("test-container");
-  container.innerHTML = ""; // очищаем на всякий случай
+  container.innerHTML = ""; // очищаем
 
-  questions.forEach((q, index) => {
-    const div = document.createElement("div");
-    div.classList.add("question");
+  blocks.forEach(block => {
+    // Заголовок блока
+    const blockTitle = document.createElement("h2");
+    blockTitle.textContent = block.name;
+    container.appendChild(blockTitle);
 
-    // Вопрос
-    const qTitle = document.createElement("h3");
-    qTitle.textContent = `${index + 1}. ${q.text}`;
-    div.appendChild(qTitle);
+    // Вопросы внутри блока
+    block.questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
 
-    // Ответы
-    q.answers.forEach(ans => {
-      const btn = document.createElement("button");
-      btn.textContent = ans.text;
-      btn.classList.add("link-btn");
-      btn.onclick = () => {
-        scores[ans.type] = (scores[ans.type] || 0) + 1;
-      };
-      div.appendChild(btn);
+      const qTitle = document.createElement("h3");
+      qTitle.textContent = q.text;
+      div.appendChild(qTitle);
+
+      q.answers.forEach(ans => {
+        const btn = document.createElement("button");
+        btn.textContent = ans.text;
+        btn.classList.add("link-btn");
+        btn.onclick = () => {
+          scores[ans.type] = (scores[ans.type] || 0) + 1;
+        };
+        div.appendChild(btn);
+      });
+
+      container.appendChild(div);
     });
-
-    container.appendChild(div);
   });
 }
 
-// Подсчёт результата
+// ===================== Подсчёт результата =====================
 function showResult() {
   let maxType = null, maxScore = -1;
   for (let type in scores) {
@@ -92,8 +95,9 @@ function showResult() {
   document.getElementById("result").innerHTML = `<h2>${res}</h2>`;
 }
 
-// Запуск после загрузки страницы
+// ===================== Запуск =====================
 document.addEventListener("DOMContentLoaded", () => {
   renderQuestions();
   document.getElementById("submit-btn").addEventListener("click", showResult);
 });
+
