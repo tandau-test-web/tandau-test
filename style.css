@@ -66,10 +66,18 @@ h1 {
   text-decoration: none;
   font-weight: bold;
   transition: background 0.3s, transform 0.2s;
+  margin: 5px;
 }
 
 .link-btn:hover {
   background: #66bb6a;
+  transform: scale(1.05);
+}
+
+/* Активный (выбранный) ответ */
+.link-btn.selected {
+  background: #4caf50; /* насыщенный зелёный */
+  color: #fff;
   transform: scale(1.05);
 }
 
@@ -116,6 +124,3 @@ h1 {
   color: #555;
   text-align: justify;
 }
-
-
-
