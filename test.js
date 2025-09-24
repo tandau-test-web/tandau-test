@@ -1040,31 +1040,50 @@ const results = {
  Зона роста: Чтобы заботиться о других, не забывай вкладываться и в собственный ресурс.`,
 };
 
-// 3. При выборе ответа
-function chooseAnswer(type) {
-  scores[type] = (scores[type] || 0) + 1;
-  // перейти к следующему вопросу...
+// Рендер вопросов
+function renderQuestions() {
+  const container = document.getElementById("test-container");
+  container.innerHTML = ""; // очищаем на всякий случай
+
+  questions.forEach((q, index) => {
+    const div = document.createElement("div");
+    div.classList.add("question");
+
+    // Вопрос
+    const qTitle = document.createElement("h3");
+    qTitle.textContent = `${index + 1}. ${q.text}`;
+    div.appendChild(qTitle);
+
+    // Ответы
+    q.answers.forEach(ans => {
+      const btn = document.createElement("button");
+      btn.textContent = ans.text;
+      btn.classList.add("link-btn");
+      btn.onclick = () => {
+        scores[ans.type] = (scores[ans.type] || 0) + 1;
+      };
+      div.appendChild(btn);
+    });
+
+    container.appendChild(div);
+  });
 }
 
-// 4. Подсчёт результата
-function getResult() {
+// Подсчёт результата
+function showResult() {
   let maxType = null, maxScore = -1;
-  for (let t in scores) {
-    if (scores[t] > maxScore) { 
-      maxScore = scores[t]; 
-      maxType = t; 
+  for (let type in scores) {
+    if (scores[type] > maxScore) {
+      maxScore = scores[type];
+      maxType = type;
     }
   }
-  return { type: maxType, score: maxScore };
+  const res = results[maxType] || "Результат пока не определён.";
+  document.getElementById("result").innerHTML = `<h2>${res}</h2>`;
 }
 
-// 5. Показ результата
-function showResult() {
-  const res = getResult();
-  const text = results[res.type] || "Рекомендации пока не добавлены";
-  document.getElementById('result').innerHTML = `
-    <h2>Ваш архетип: ${res.type}</h2>
-    <p>${text}</p>
-  `;
-}
-</script>
+// Запуск после загрузки страницы
+document.addEventListener("DOMContentLoaded", () => {
+  renderQuestions();
+  document.getElementById("submit-btn").addEventListener("click", showResult);
+});
