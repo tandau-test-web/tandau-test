@@ -1,136 +1,77 @@
-// === 1. Вопросы ===
-const blocks = [
+// test.js
+
+// Список вопросов (пример)
+const questions = [
   {
-    name: "Архетип",
-    questions: [
-      {
-        q: "Что для тебя важнее всего?",
-        answers: [
-          { text: "Создавать новое", type: "Создатель" },
-          { text: "Изучать мир", type: "Исследователь" },
-          { text: "Вести за собой людей", type: "Лидер" },
-          { text: "Помогать другим", type: "Помощник" }
-        ]
-      },
-      {
-        q: "Как ты чаще действуешь?",
-        answers: [
-          { text: "Думаю нестандартно", type: "Инноватор" },
-          { text: "Предпочитаю практику", type: "Практик" },
-          { text: "Люблю общаться", type: "Коммуникатор" },
-          { text: "Строю планы", type: "Стратег" }
-        ]
-      }
+    text: "Что тебе ближе?",
+    answers: [
+      { text: "Придумывать новые идеи", type: "Создатель" },
+      { text: "Изучать факты и анализировать", type: "Исследователь" }
     ]
   },
   {
-    name: "Характер",
-    questions: [
-      {
-        q: "Как бы ты описал себя?",
-        answers: [
-          { text: "Энергичный", type: "Энергичный" },
-          { text: "Ответственный", type: "Ответственный" },
-          { text: "Поддерживающий", type: "Поддерживающий" },
-          { text: "Идеатор", type: "Идеатор" }
-        ]
-      },
-      {
-        q: "Что тебе ближе?",
-        answers: [
-          { text: "Быть гибким", type: "Гибкий" },
-          { text: "Достигать целей", type: "Целеустремлённый" }
-        ]
-      }
+    text: "Как ты чаще действуешь?",
+    answers: [
+      { text: "Веду за собой других", type: "Лидер" },
+      { text: "Поддерживаю и помогаю", type: "Помощник" }
     ]
   }
 ];
 
-// === 2. Счётчики ===
+// Счётчики
 let scores = {};
 
-// === 3. Результаты ===
+// Результаты по типам
 const results = {
-  "Создатель": "Ты творческий человек, придумываешь новое.",
-  "Исследователь": "Тебе нравится узнавать новое.",
-  "Лидер": "Ты умеешь вести за собой.",
-  "Помощник": "Ты заботишься о других.",
-  "Инноватор": "Ты придумываешь свежие идеи.",
-  "Практик": "Ты ценишь результат.",
-  "Коммуникатор": "Ты легко находишь контакт.",
-  "Стратег": "Ты умеешь планировать.",
-  "Энергичный": "Ты заряжаешь энергией.",
-  "Ответственный": "На тебя можно положиться.",
-  "Поддерживающий": "Ты создаёшь доверие.",
-  "Идеатор": "У тебя много идей.",
-  "Гибкий": "Ты легко адаптируешься.",
-  "Целеустремлённый": "Ты идёшь к целям."
+  "Создатель": "Ты творческий человек 🌸",
+  "Исследователь": "Ты любишь узнавать новое 🔎",
+  "Лидер": "У тебя лидерские качества 🎯",
+  "Помощник": "Ты умеешь поддерживать других 🤝"
 };
 
-// === 4. Рендеринг вопросов ===
-function renderTest() {
+// Рендер вопросов
+function renderQuestions() {
   const container = document.getElementById("test-container");
-  container.innerHTML = "";
+  questions.forEach((q, index) => {
+    const div = document.createElement("div");
+    div.classList.add("question");
 
-  blocks.forEach(block => {
-    const blockEl = document.createElement("div");
-    blockEl.classList.add("block");
-    blockEl.innerHTML = `<h2>${block.name}</h2>`;
+    // Вопрос
+    const qTitle = document.createElement("h3");
+    qTitle.textContent = `${index + 1}. ${q.text}`;
+    div.appendChild(qTitle);
 
-    block.questions.forEach((q, i) => {
-      const qEl = document.createElement("div");
-      qEl.classList.add("question");
-      qEl.innerHTML = `<p>${q.q}</p>`;
-
-      q.answers.forEach(ans => {
-        const btn = document.createElement("button");
-        btn.classList.add("link-btn");
-        btn.textContent = ans.text;
-        btn.onclick = () => chooseAnswer(ans.type, btn);
-        qEl.appendChild(btn);
-      });
-
-      blockEl.appendChild(qEl);
+    // Ответы
+    q.answers.forEach(ans => {
+      const btn = document.createElement("button");
+      btn.textContent = ans.text;
+      btn.classList.add("link-btn");
+      btn.onclick = () => {
+        scores[ans.type] = (scores[ans.type] || 0) + 1;
+      };
+      div.appendChild(btn);
     });
 
-    container.appendChild(blockEl);
+    container.appendChild(div);
   });
 }
 
-// === 5. При выборе ответа ===
-function chooseAnswer(type, btn) {
-  scores[type] = (scores[type] || 0) + 1;
-
-  // выделяем выбранный ответ
-  btn.style.background = "#66bb6a";
-  btn.style.color = "#fff";
-}
-
-// === 6. Подсчёт результата ===
-function getResult() {
+// Подсчёт результата
+function showResult() {
   let maxType = null, maxScore = -1;
-  for (let t in scores) {
-    if (scores[t] > maxScore) {
-      maxScore = scores[t];
-      maxType = t;
+  for (let type in scores) {
+    if (scores[type] > maxScore) {
+      maxScore = scores[type];
+      maxType = type;
     }
   }
-  return { type: maxType, score: maxScore };
+  const res = results[maxType] || "Результат пока не определён.";
+  document.getElementById("result").innerHTML = `<h2>${res}</h2>`;
 }
 
-// === 7. Показ результата ===
-function showResult() {
-  const res = getResult();
-  const text = results[res.type] || "Рекомендации пока не добавлены.";
-  document.getElementById("result").innerHTML = `
-    <h2>Ваш результат: ${res.type}</h2>
-    <p>${text}</p>
-  `;
-}
-
-// === 8. Запуск ===
+// События
 document.addEventListener("DOMContentLoaded", () => {
-  renderTest();
+  renderQuestions();
   document.getElementById("submit-btn").addEventListener("click", showResult);
 });
 
