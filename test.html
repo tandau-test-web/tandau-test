@@ -2,37 +2,169 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тест «Таңдау 7»</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Тест «Tandaý 7»</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #4CAF50;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      display: none;
+      padding: 30px;
+    }
+    .page.active {
+      display: block;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    button {
+      background: #fff;
+      color: #4CAF50;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #f1f1f1;
+    }
+    .progress {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Тест «Таңдау 7»</h1>
-    <p>Ответь на вопросы и узнай свои таланты ✨</p>
 
-    <!-- Контейнер для вопросов -->
-    <div id="test-container"></div>
+  <h1>Тест «Tandaý 7»</h1>
 
-    <!-- Кнопка завершения -->
-    <button id="submit-btn" class="link-btn">Завершить тест</button>
-
-    <!-- Здесь появится результат -->
-    <div id="result"></div>
-
-    <p><a href="index.html" class="link-btn">⬅ Вернуться на главную</a></p>
+  <!-- Блоки -->
+  <div class="page active" id="page1">
+    <h2>Блок 1. Архетип 🌱</h2>
+    <p>Вопрос 1...</p>
+    <p>Вопрос 2...</p>
+    <!-- добавь остальные вопросы -->
+    <div class="buttons">
+      <button onclick="nextPage()">Следующий блок →</button>
+    </div>
+    <div class="progress">Страница 1 из 7</div>
   </div>
 
-  <!-- Подключение теста (важно внизу!) -->
-  <script src="test.js"></script>
+  <div class="page" id="page2">
+    <h2>Блок 2. Характер 🎭</h2>
+    <p>Вопрос 11...</p>
+    <!-- остальные вопросы -->
+    <div class="buttons">
+      <button onclick="prevPage()">← Назад</button>
+      <button onclick="nextPage()">Следующий блок →</button>
+    </div>
+    <div class="progress">Страница 2 из 7</div>
+  </div>
+
+  <div class="page" id="page3">
+    <h2>Блок 3. Темперамент 🔥💧</h2>
+    <p>Вопрос 21...</p>
+    <!-- остальные вопросы -->
+    <div class="buttons">
+      <button onclick="prevPage()">← Назад</button>
+      <button onclick="nextPage()">Следующий блок →</button>
+    </div>
+    <div class="progress">Страница 3 из 7</div>
+  </div>
+
+  <div class="page" id="page4">
+    <h2>Блок 4. Тип интеллекта 🧠</h2>
+    <p>Вопрос 31...</p>
+    <!-- остальные вопросы -->
+    <div class="buttons">
+      <button onclick="prevPage()">← Назад</button>
+      <button onclick="nextPage()">Следующий блок →</button>
+    </div>
+    <div class="progress">Страница 4 из 7</div>
+  </div>
+
+  <div class="page" id="page5">
+    <h2>Блок 5. Ценности 💎</h2>
+    <p>Вопрос 41...</p>
+    <!-- остальные вопросы -->
+    <div class="buttons">
+      <button onclick="prevPage()">← Назад</button>
+      <button onclick="nextPage()">Следующий блок →</button>
+    </div>
+    <div class="progress">Страница 5 из 7</div>
+  </div>
+
+  <div class="page" id="page6">
+    <h2>Блок 6. Интересы ✨</h2>
+    <p>Вопрос 51...</p>
+    <!-- остальные вопросы -->
+    <div class="buttons">
+      <button onclick="prevPage()">← Назад</button>
+      <button onclick="nextPage()">Следующий блок →</button>
+    </div>
+    <div class="progress">Страница 6 из 7</div>
+  </div>
+
+  <div class="page" id="page7">
+    <h2>Блок 7. Образ жизни 🌍</h2>
+    <p>Вопрос 61...</p>
+    <!-- остальные вопросы -->
+    <div class="buttons">
+      <button onclick="prevPage()">← Назад</button>
+      <button onclick="finishTest()">Завершить тест</button>
+    </div>
+    <div class="progress">Страница 7 из 7</div>
+  </div>
+
+  <!-- Финальная страница -->
+  <div class="page" id="result">
+    <h2>Тест завершён 🎉</h2>
+    <p>Спасибо за прохождение!<br>Твой результат формируется...</p>
+    <!-- сюда потом вставим карточку с итогом -->
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 7;
+
+    function showPage(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + n)?.classList.add('active');
+      if (n === "result") {
+        document.getElementById('result').classList.add('active');
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+
+    function finishTest() {
+      showPage("result");
+    }
+  </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
