@@ -5,72 +5,36 @@
   <meta charset="UTF-8">
   <title>Тест «Tandaý 7»</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #4CAF50;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .page {
-      display: none;
-      padding: 30px;
-    }
-    .page.active {
-      display: block;
-    }
-    h1 {
-      margin-top: 20px;
-    }
-    h2 {
-      margin-bottom: 20px;
-    }
-    .buttons {
-      margin-top: 20px;
-    }
-    button {
-      background: #fff;
-      color: #4CAF50;
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #f1f1f1;
-    }
-    .progress {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #f0f0f0;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
+    .question { margin-bottom: 20px; }
+    button { margin: 5px; padding: 10px 15px; }
+    .selected { background: #ffd54f; }
+    .nav-buttons { text-align: center; margin-top: 20px; }
+    #result { margin-top: 30px; font-size: 18px; font-weight: bold; }
   </style>
 </head>
 <body>
-
   <h1>Тест «Tandaý 7»</h1>
-  <p>Ответь на вопросы и узнай свой талант ✨</p>
+  <p style="text-align:center;">Ответь на вопросы и узнай свой талант ✨</p>
 
-  <!-- Блоки с вопросами будут подгружаться динамически из test.js -->
+  <div id="test-container"></div>
 
-  <div id="quiz"></div>
-
-  <!-- Финальная страница -->
-
-  <div class="page" id="result">
-    <h2>Тест завершён 🎉</h2>
-    <p id="finalText">Спасибо за прохождение!<br>Твой результат формируется...</p>
+  <div class="nav-buttons">
+    <button id="prev-btn">⬅ Назад</button>
+    <button id="next-btn">Далее ➡</button>
+    <button id="submit-btn" style="display:none;">Показать результат</button>
   </div>
 
-  <!-- Подключение теста (важно внизу!) -->
+  <div id="result"></div>
+
+  <!-- Подключение логики теста -->
 
   <script src="test.js"></script>
 
 </body>
 </html>
+
+
 
 
