@@ -23,20 +23,6 @@
     h2 {
       margin-bottom: 20px;
     }
-    .options {
-      margin: 15px 0;
-      text-align: left;
-      display: inline-block;
-    }
-    label {
-      display: block;
-      margin: 8px 0;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    input[type="radio"] {
-      margin-right: 10px;
-    }
     .buttons {
       margin-top: 20px;
     }
@@ -64,118 +50,197 @@
 <body>
 
   <h1>Тест «Tandaý 7»</h1>
+  <p>Ответь на вопросы и узнай свой талант ✨</p>
 
-  <!-- Контейнер для вопросов -->
+  <!-- Блок 1 -->
 
-  <div class="page active" id="quiz"></div>
+  <div class="page active" id="page1">
+    <h2>Блок 1. Архетип 🌱</h2>
+    <p>1. Кто ты по духу?</p>
+    <label><input type="radio" name="q1" value="creator"> Творец</label><br>
+    <label><input type="radio" name="q1" value="leader"> Лидер</label><br>
+    <label><input type="radio" name="q1" value="helper"> Помощник</label><br>
+
+```
+<!-- остальные вопросы блока -->
+<div class="buttons">
+  <button onclick="nextPage()">Следующий блок →</button>
+</div>
+<div class="progress">Страница 1 из 7</div>
+```
+
+  </div>
+
+  <!-- Блок 2 -->
+
+  <div class="page" id="page2">
+    <h2>Блок 2. Характер 🎭</h2>
+    <p>11. Как ты ведёшь себя в коллективе?</p>
+    <label><input type="radio" name="q11" value="leader"> Беру ответственность</label><br>
+    <label><input type="radio" name="q11" value="helper"> Поддерживаю других</label><br>
+    <label><input type="radio" name="q11" value="creator"> Предлагаю идеи</label><br>
+
+```
+<div class="buttons">
+  <button onclick="prevPage()">← Назад</button>
+  <button onclick="nextPage()">Следующий блок →</button>
+</div>
+<div class="progress">Страница 2 из 7</div>
+```
+
+  </div>
+
+  <!-- Блок 3 -->
+
+  <div class="page" id="page3">
+    <h2>Блок 3. Темперамент 🔥💧</h2>
+    <p>21. Ты чаще...</p>
+    <label><input type="radio" name="q21" value="leader"> Активный</label><br>
+    <label><input type="radio" name="q21" value="helper"> Спокойный</label><br>
+    <label><input type="radio" name="q21" value="creator"> Эмоциональный</label><br>
+
+```
+<div class="buttons">
+  <button onclick="prevPage()">← Назад</button>
+  <button onclick="nextPage()">Следующий блок →</button>
+</div>
+<div class="progress">Страница 3 из 7</div>
+```
+
+  </div>
+
+  <!-- Блок 4 -->
+
+  <div class="page" id="page4">
+    <h2>Блок 4. Тип интеллекта 🧠</h2>
+    <p>31. В чём твоя сила?</p>
+    <label><input type="radio" name="q31" value="creator"> Воображение</label><br>
+    <label><input type="radio" name="q31" value="leader"> Логика</label><br>
+    <label><input type="radio" name="q31" value="helper"> Эмпатия</label><br>
+
+```
+<div class="buttons">
+  <button onclick="prevPage()">← Назад</button>
+  <button onclick="nextPage()">Следующий блок →</button>
+</div>
+<div class="progress">Страница 4 из 7</div>
+```
+
+  </div>
+
+  <!-- Блок 5 -->
+
+  <div class="page" id="page5">
+    <h2>Блок 5. Ценности 💎</h2>
+    <p>41. Что для тебя главное?</p>
+    <label><input type="radio" name="q41" value="leader"> Успех</label><br>
+    <label><input type="radio" name="q41" value="helper"> Дружба</label><br>
+    <label><input type="radio" name="q41" value="creator"> Самовыражение</label><br>
+
+```
+<div class="buttons">
+  <button onclick="prevPage()">← Назад</button>
+  <button onclick="nextPage()">Следующий блок →</button>
+</div>
+<div class="progress">Страница 5 из 7</div>
+```
+
+  </div>
+
+  <!-- Блок 6 -->
+
+  <div class="page" id="page6">
+    <h2>Блок 6. Интересы ✨</h2>
+    <p>51. Чем ты увлекаешься?</p>
+    <label><input type="radio" name="q51" value="creator"> Искусство</label><br>
+    <label><input type="radio" name="q51" value="leader"> Спорт</label><br>
+    <label><input type="radio" name="q51" value="helper"> Люди</label><br>
+
+```
+<div class="buttons">
+  <button onclick="prevPage()">← Назад</button>
+  <button onclick="nextPage()">Следующий блок →</button>
+</div>
+<div class="progress">Страница 6 из 7</div>
+```
+
+  </div>
+
+  <!-- Блок 7 -->
+
+  <div class="page" id="page7">
+    <h2>Блок 7. Образ жизни 🌍</h2>
+    <p>61. Твой стиль жизни?</p>
+    <label><input type="radio" name="q61" value="leader"> Активный</label><br>
+    <label><input type="radio" name="q61" value="helper"> Спокойный</label><br>
+    <label><input type="radio" name="q61" value="creator"> Творческий</label><br>
+
+```
+<div class="buttons">
+  <button onclick="prevPage()">← Назад</button>
+  <button onclick="finishTest()">Завершить тест</button>
+</div>
+<div class="progress">Страница 7 из 7</div>
+```
+
+  </div>
 
   <!-- Финальная страница -->
 
   <div class="page" id="result">
     <h2>Тест завершён 🎉</h2>
-    <p id="finalText">Спасибо за прохождение!<br>Твой результат формируется...</p>
-    <div id="answersList"></div>
+    <div id="result-text"></div>
+    <p><a href="test.html" style="color:white;">Пройти снова</a></p>
   </div>
 
-  <script src="test.js"></script>
-
   <script>
-    let currentBlock = 0;
-    let currentQuestion = 0;
-    let answers = {};
+    let currentPage = 1;
+    const totalPages = 7;
 
-    function renderQuestion() {
-      const quiz = document.getElementById('quiz');
-      quiz.innerHTML = '';
-
-      const block = questions[currentBlock];
-      if (!block) return;
-
-      const question = block.questions[currentQuestion];
-
-      const h2 = document.createElement('h2');
-      h2.textContent = block.title;
-      quiz.appendChild(h2);
-
-      const p = document.createElement('p');
-      p.textContent = question.text;
-      quiz.appendChild(p);
-
-      // Варианты ответов
-      const optionsDiv = document.createElement('div');
-      optionsDiv.className = "options";
-
-      question.options.forEach((opt, i) => {
-        const label = document.createElement('label');
-        const input = document.createElement('input');
-        input.type = "radio";
-        input.name = "answer";
-        input.value = opt;
-        if (answers[`${currentBlock}_${currentQuestion}`] === opt) {
-          input.checked = true;
-        }
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(opt));
-        optionsDiv.appendChild(label);
-      });
-
-      quiz.appendChild(optionsDiv);
-
-      // Кнопка "Дальше"
-      const btnNext = document.createElement('button');
-      btnNext.textContent = (currentBlock === questions.length - 1 && currentQuestion === block.questions.length - 1) 
-        ? "Завершить тест" 
-        : "Дальше";
-      btnNext.onclick = () => saveAndNext();
-      quiz.appendChild(btnNext);
-
-      // Прогресс
-      const progress = document.createElement('div');
-      progress.className = "progress";
-      progress.textContent = `Блок ${currentBlock+1} из ${questions.length}, Вопрос ${currentQuestion+1} из ${block.questions.length}`;
-      quiz.appendChild(progress);
+    function showPage(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + n)?.classList.add('active');
+      if (n === "result") {
+        document.getElementById('result').classList.add('active');
+      }
     }
 
-    function saveAndNext() {
-      const selected = document.querySelector('input[name="answer"]:checked');
-      if (!selected) {
-        alert("Пожалуйста, выбери вариант ответа!");
-        return;
+    function nextPage() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
       }
+    }
 
-      answers[`${currentBlock}_${currentQuestion}`] = selected.value;
-
-      const block = questions[currentBlock];
-      if (currentQuestion < block.questions.length - 1) {
-        currentQuestion++;
-      } else {
-        if (currentBlock < questions.length - 1) {
-          currentBlock++;
-          currentQuestion = 0;
-        } else {
-          finishTest();
-          return;
-        }
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
       }
-      renderQuestion();
     }
 
     function finishTest() {
-      document.getElementById('quiz').classList.remove('active');
-      document.getElementById('result').classList.add('active');
+      let answers = document.querySelectorAll('input[type="radio"]:checked');
+      let scores = {};
 
-      // Показать все ответы (для проверки)
-      let answersHTML = "<h3>Твои ответы:</h3><ul>";
-      for (let key in answers) {
-        answersHTML += `<li>${key}: ${answers[key]}</li>`;
-      }
-      answersHTML += "</ul>";
-      document.getElementById('answersList').innerHTML = answersHTML;
+      answers.forEach(a => {
+        let val = a.value;
+        scores[val] = (scores[val] || 0) + 1;
+      });
+
+      let result = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
+
+      let descriptions = {
+        "creator": "Ты — Создатель 🌸. У тебя развито воображение, ты любишь создавать новое.",
+        "leader": "Ты — Лидер 🎯. Умеешь вести за собой и принимать решения.",
+        "helper": "Ты — Помощник 🤝. Твоя сила в поддержке и заботе о других."
+      };
+
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById("result").classList.add("active");
+      document.getElementById("result-text").innerHTML = "<p>" + (descriptions[result] || "Результат не определён") + "</p>";
     }
-
-      <!-- Подключение теста (важно внизу!) -->
-  <script src="test.js"></script>
+  </script>
 
 </body>
 </html>
-
