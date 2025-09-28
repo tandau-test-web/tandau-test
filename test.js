@@ -1068,6 +1068,43 @@ const results = {
 Зона роста: Чтобы заботиться о других, не забывай вкладываться и в собственный ресурс.`,
 };
 // ===================== Рендер вопросов =====================
+// ===================== Пример структуры вопросов =====================
+const blocks = [
+  {
+    name: "Архетипы",
+    questions: [
+      {
+        text: "Ты любишь придумывать новые идеи?",
+        answers: [
+          { text: "Да", type: "Создатель" },
+          { text: "Нет", type: "Практик" }
+        ]
+      },
+      {
+        text: "Тебе интереснее исследовать новое, чем повторять привычное?",
+        answers: [
+          { text: "Да", type: "Исследователь" },
+          { text: "Нет", type: "Коммуникатор" }
+        ]
+      },
+    ]
+  },
+  {
+    name: "Характер",
+    questions: [
+      {
+        text: "Ты обычно берёшь ответственность за результат?",
+        answers: [
+          { text: "Да", type: "Лидер" },
+          { text: "Нет", type: "Поддерживающий" }
+        ]
+      }
+    ]
+  }
+  // 👉 сюда добавь остальные блоки: Темперамент, Интеллект, Интересы, Ценности, Образ жизни
+];
+
+// ===================== Рендер вопросов =====================
 function renderQuestions() {
   const container = document.getElementById("test-container");
   container.innerHTML = ""; // очищаем
@@ -1078,12 +1115,12 @@ function renderQuestions() {
     blockTitle.textContent = block.name;
     container.appendChild(blockTitle);
 
-    // Вопросы внутри блока
+    // Вопросы блока
     block.questions.forEach(q => {
       const div = document.createElement("div");
       div.classList.add("question");
 
-      const qTitle = document.createElement("h3");
+      const qTitle = document.createElement("p");
       qTitle.textContent = q.text;
       div.appendChild(qTitle);
 
@@ -1091,16 +1128,16 @@ function renderQuestions() {
       q.answers.forEach(ans => {
         const btn = document.createElement("button");
         btn.textContent = ans.text;
-        btn.classList.add("link-btn");
+        btn.classList.add("answer-btn");
 
         btn.onclick = () => {
-          // Убираем подсветку со всех кнопок этого вопроса
+          // убрать старый выбор в этом вопросе
           div.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
 
-          // Подсвечиваем выбранную кнопку
+          // подсветить новый выбор
           btn.classList.add("selected");
 
-          // Записываем результат
+          // записать результат
           scores[ans.type] = (scores[ans.type] || 0) + 1;
         };
 
@@ -1115,14 +1152,16 @@ function renderQuestions() {
 // ===================== Подсчёт результата =====================
 function showResult() {
   let maxType = null, maxScore = -1;
+
   for (let type in scores) {
     if (scores[type] > maxScore) {
       maxScore = scores[type];
       maxType = type;
     }
   }
+
   const res = results[maxType] || "Результат пока не определён.";
-  document.getElementById("result").innerHTML = `<h2>${res}</h2>`;
+  document.getElementById("result").innerHTML = `<h2>${maxType}</h2><p>${res}</p>`;
 }
 
 // ===================== Запуск =====================
@@ -1130,9 +1169,3 @@ document.addEventListener("DOMContentLoaded", () => {
   renderQuestions();
   document.getElementById("submit-btn").addEventListener("click", showResult);
 });
-
-
-
-
-
-
