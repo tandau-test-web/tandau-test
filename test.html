@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -21,6 +22,20 @@
     }
     h2 {
       margin-bottom: 20px;
+    }
+    .options {
+      margin: 15px 0;
+      text-align: left;
+      display: inline-block;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
     }
     .buttons {
       margin-top: 20px;
@@ -50,120 +65,115 @@
 
   <h1>Тест «Tandaý 7»</h1>
 
-  <!-- Блоки -->
-  <div class="page active" id="page1">
-    <h2>Блок 1. Архетип 🌱</h2>
-    <p>Вопрос 1...</p>
-    <p>Вопрос 2...</p>
-    <!-- добавь остальные вопросы -->
-    <div class="buttons">
-      <button onclick="nextPage()">Следующий блок →</button>
-    </div>
-    <div class="progress">Страница 1 из 7</div>
-  </div>
+  <!-- Контейнер для вопросов -->
 
-  <div class="page" id="page2">
-    <h2>Блок 2. Характер 🎭</h2>
-    <p>Вопрос 11...</p>
-    <!-- остальные вопросы -->
-    <div class="buttons">
-      <button onclick="prevPage()">← Назад</button>
-      <button onclick="nextPage()">Следующий блок →</button>
-    </div>
-    <div class="progress">Страница 2 из 7</div>
-  </div>
-
-  <div class="page" id="page3">
-    <h2>Блок 3. Темперамент 🔥💧</h2>
-    <p>Вопрос 21...</p>
-    <!-- остальные вопросы -->
-    <div class="buttons">
-      <button onclick="prevPage()">← Назад</button>
-      <button onclick="nextPage()">Следующий блок →</button>
-    </div>
-    <div class="progress">Страница 3 из 7</div>
-  </div>
-
-  <div class="page" id="page4">
-    <h2>Блок 4. Тип интеллекта 🧠</h2>
-    <p>Вопрос 31...</p>
-    <!-- остальные вопросы -->
-    <div class="buttons">
-      <button onclick="prevPage()">← Назад</button>
-      <button onclick="nextPage()">Следующий блок →</button>
-    </div>
-    <div class="progress">Страница 4 из 7</div>
-  </div>
-
-  <div class="page" id="page5">
-    <h2>Блок 5. Ценности 💎</h2>
-    <p>Вопрос 41...</p>
-    <!-- остальные вопросы -->
-    <div class="buttons">
-      <button onclick="prevPage()">← Назад</button>
-      <button onclick="nextPage()">Следующий блок →</button>
-    </div>
-    <div class="progress">Страница 5 из 7</div>
-  </div>
-
-  <div class="page" id="page6">
-    <h2>Блок 6. Интересы ✨</h2>
-    <p>Вопрос 51...</p>
-    <!-- остальные вопросы -->
-    <div class="buttons">
-      <button onclick="prevPage()">← Назад</button>
-      <button onclick="nextPage()">Следующий блок →</button>
-    </div>
-    <div class="progress">Страница 6 из 7</div>
-  </div>
-
-  <div class="page" id="page7">
-    <h2>Блок 7. Образ жизни 🌍</h2>
-    <p>Вопрос 61...</p>
-    <!-- остальные вопросы -->
-    <div class="buttons">
-      <button onclick="prevPage()">← Назад</button>
-      <button onclick="finishTest()">Завершить тест</button>
-    </div>
-    <div class="progress">Страница 7 из 7</div>
-  </div>
+  <div class="page active" id="quiz"></div>
 
   <!-- Финальная страница -->
+
   <div class="page" id="result">
     <h2>Тест завершён 🎉</h2>
-    <p>Спасибо за прохождение!<br>Твой результат формируется...</p>
-    <!-- сюда потом вставим карточку с итогом -->
+    <p id="finalText">Спасибо за прохождение!<br>Твой результат формируется...</p>
+    <div id="answersList"></div>
   </div>
 
+  <script src="test.js"></script>
+
   <script>
-    let currentPage = 1;
-    const totalPages = 7;
+    let currentBlock = 0;
+    let currentQuestion = 0;
+    let answers = {};
 
-    function showPage(n) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page' + n)?.classList.add('active');
-      if (n === "result") {
-        document.getElementById('result').classList.add('active');
-      }
+    function renderQuestion() {
+      const quiz = document.getElementById('quiz');
+      quiz.innerHTML = '';
+
+      const block = questions[currentBlock];
+      if (!block) return;
+
+      const question = block.questions[currentQuestion];
+
+      const h2 = document.createElement('h2');
+      h2.textContent = block.title;
+      quiz.appendChild(h2);
+
+      const p = document.createElement('p');
+      p.textContent = question.text;
+      quiz.appendChild(p);
+
+      // Варианты ответов
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = "options";
+
+      question.options.forEach((opt, i) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = "radio";
+        input.name = "answer";
+        input.value = opt;
+        if (answers[`${currentBlock}_${currentQuestion}`] === opt) {
+          input.checked = true;
+        }
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(opt));
+        optionsDiv.appendChild(label);
+      });
+
+      quiz.appendChild(optionsDiv);
+
+      // Кнопка "Дальше"
+      const btnNext = document.createElement('button');
+      btnNext.textContent = (currentBlock === questions.length - 1 && currentQuestion === block.questions.length - 1) 
+        ? "Завершить тест" 
+        : "Дальше";
+      btnNext.onclick = () => saveAndNext();
+      quiz.appendChild(btnNext);
+
+      // Прогресс
+      const progress = document.createElement('div');
+      progress.className = "progress";
+      progress.textContent = `Блок ${currentBlock+1} из ${questions.length}, Вопрос ${currentQuestion+1} из ${block.questions.length}`;
+      quiz.appendChild(progress);
     }
 
-    function nextPage() {
-      if (currentPage < totalPages) {
-        currentPage++;
-        showPage(currentPage);
+    function saveAndNext() {
+      const selected = document.querySelector('input[name="answer"]:checked');
+      if (!selected) {
+        alert("Пожалуйста, выбери вариант ответа!");
+        return;
       }
-    }
 
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        showPage(currentPage);
+      answers[`${currentBlock}_${currentQuestion}`] = selected.value;
+
+      const block = questions[currentBlock];
+      if (currentQuestion < block.questions.length - 1) {
+        currentQuestion++;
+      } else {
+        if (currentBlock < questions.length - 1) {
+          currentBlock++;
+          currentQuestion = 0;
+        } else {
+          finishTest();
+          return;
+        }
       }
+      renderQuestion();
     }
 
     function finishTest() {
-      showPage("result");
+      document.getElementById('quiz').classList.remove('active');
+      document.getElementById('result').classList.add('active');
+
+      // Показать все ответы (для проверки)
+      let answersHTML = "<h3>Твои ответы:</h3><ul>";
+      for (let key in answers) {
+        answersHTML += `<li>${key}: ${answers[key]}</li>`;
+      }
+      answersHTML += "</ul>";
+      document.getElementById('answersList').innerHTML = answersHTML;
     }
+
+    renderQuestion();
   </script>
 
 </body>
